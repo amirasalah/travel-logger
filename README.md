@@ -8,6 +8,10 @@ The user of the app uses it to log his current location with the following detai
 * Description
 * Latitude
 * Longitude
+* Rating
 * Start Date
 * End Date
-* Images slider
+* Image
+* Review
+
+Thanks to codeGarden
