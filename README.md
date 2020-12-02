@@ -9,9 +9,8 @@ The user of the app uses it to log his current location with the following detai
 * Latitude
 * Longitude
 * Rating
-* Start Date
-* End Date
 * Image
-* Review
+* Visit Date
+* comments
 
 Thanks to codeGarden
