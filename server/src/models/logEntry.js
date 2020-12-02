@@ -37,6 +37,6 @@ const logEntrySchema = new Schema({
     image: String,
     timestamps: true,
 })
-const logEntry = mongoose.model('logEntry', logEntrySchema)
+const LogEntry = mongoose.model('logEntry', logEntrySchema)
 
-module.exports = logEntry
+module.exports = LogEntry
