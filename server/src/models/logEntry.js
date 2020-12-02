@@ -2,6 +2,7 @@ const mongoose = require('mongoose')
 
 const { Schema } = mongoose
 
+// TODO: Refactor to GeoJson
 const requiredNumber = {
     type: Number,
     required: true,
