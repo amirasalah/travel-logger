@@ -3,6 +3,8 @@ const LogEntry = require('../models/logEntry')
 
 const router = Router()
 
+// TODO: Add delete endpoint
+// TODO: Add update endpoint
 router.get('/', async (req, res, next) => {
     try {
         const entries = await LogEntry.find()
