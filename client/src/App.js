@@ -1,10 +1,13 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
-import ReactMapGL, { Marker } from 'react-map-gl'
+import ReactMapGL, { Marker, Popup } from 'react-map-gl'
 import { getLogEntries } from './apis'
 
 const Map = () => {
     const [logEntries, setLogEntries] = useState([])
+    const [showPopup, setShowPopup] = useState({})
+    const [addEntryLocation, setAddEntryLocation] = useState(null)
+
     const [viewport, setViewport] = useState({
         width: '100vw',
         height: '100vh',
@@ -12,43 +15,95 @@ const Map = () => {
         longitude: 31.2357,
         zoom: 8,
     })
+
     useEffect(() => {
         ;(async () => {
             const entries = await getLogEntries()
             setLogEntries(entries)
         })()
+        return () => {
+            setLogEntries([])
+        }
     }, [])
+    const addNewMarker = event => {
+        const [longitude, latitude] = event.lngLat
+        setAddEntryLocation({
+            longitude,
+            latitude,
+        })
+    }
     return (
         <ReactMapGL
             {...viewport}
             mapStyle='mapbox://styles/amirasalah/ckia954ll4jgo19rykmdo9tuc'
             mapboxApiAccessToken={process.env.REACT_APP_MAPBOX_TOKEN}
             onViewportChange={nextViewport => setViewport(nextViewport)}
+            onDblClick={addNewMarker}
         >
             {logEntries.map(entry => (
-                <Marker
-                    key={entry._id}
-                    latitude={entry.latitude}
-                    longitude={entry.longitude}
-                    offsetLeft={-20}
-                    offsetTop={-10}
-                >
-                    <svg
-                        xmlns='http://www.w3.org/2000/svg'
-                        width='24'
-                        height='24'
-                        viewBox='0 0 24 24'
-                        fill='none'
-                        stroke='white'
-                        stroke-width='2'
-                        stroke-linecap='round'
-                        stroke-linejoin='round'
-                        class='feather feather-map-pin'
+                <>
+                    <Marker
+                        key={entry._id}
+                        latitude={entry.latitude}
+                        longitude={entry.longitude}
+                        offsetLeft={-20}
+                        offsetTop={-10}
                     >
-                        <path d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'></path>
-                        <circle cx='12' cy='10' r='3'></circle>
-                    </svg>
-                </Marker>
+                        <div
+                            onClick={() =>
+                                setShowPopup({
+                                    [entry._id]: true,
+                                })
+                            }
+                        >
+                            <svg
+                                xmlns='http://www.w3.org/2000/svg'
+                                width='24'
+                                height='24'
+                                viewBox='0 0 24 24'
+                                fill='none'
+                                stroke='white'
+                                strokeWidth='2'
+                                strokeLinecap='round'
+                                strokeLinejoin='round'
+                            >
+                                <path d='M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0 1 18 0z'></path>
+                                <circle cx='12' cy='10' r='3'></circle>
+                            </svg>
+                        </div>
+                    </Marker>
+                    {showPopup[entry._id] && (
+                        <Popup
+                            latitude={entry.latitude}
+                            longitude={entry.longitude}
+                            closeButton={true}
+                            closeOnClick={false}
+                            dynamicPosition={true}
+                            onClose={() =>
+                                setShowPopup({
+                                    [entry._id]: false,
+                                })
+                            }
+                            anchor='top'
+                        >
+                            <div>
+                                <h3>{entry.title}</h3>
+                                {entry.description && (
+                                    <p>{entry.description}</p>
+                                )}
+                                <img src={entry.image} alt={entry.title} />
+                                <div>
+                                    <small>
+                                        Visit Date:
+                                        {new Date(
+                                            entry.visitDate,
+                                        ).toLocaleDateString()}
+                                    </small>
+                                </div>
+                            </div>
+                        </Popup>
+                    )}
+                </>
             ))}
         </ReactMapGL>
     )
