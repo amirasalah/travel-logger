@@ -7,7 +7,7 @@ const mongoose = require('mongoose')
 require('dotenv').config()
 
 const { notFound, errorHandler } = require('./middlewares')
-const router = require('./apis/logs')
+const router = require('./api/logs')
 
 const app = express()
 
