@@ -1,0 +1,26 @@
+{
+  "version": 2,
+  "name": "travelLog",
+  "builds": [
+    {
+      "src": "src/index.js",
+      "use": "@now/node-server"
+    }
+  ],
+  "routes": [
+    {
+      "src": "/.*",
+      "dest": "src/index.js"
+    }
+  ],
+  "alias": [
+    "travelLog"
+  ],
+  "env": {
+    "NODE_ENV": "production",
+    "PORT": "1337",
+    "DATABASE_URL": "@travelLog2",
+    "CORS_ORIGIN": "",
+    "PASSWORD": "@travelLogPassword"
+  }
+}
