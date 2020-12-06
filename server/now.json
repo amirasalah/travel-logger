@@ -20,7 +20,7 @@
     "NODE_ENV": "production",
     "PORT": "1337",
     "DATABASE_URL": "@travellog2",
-    "CORS_ORIGIN": "",
+    "CORS_ORIGIN": "https://travel-log-frontend-1dvfc3g9m.vercel.app/",
     "PASSWORD": "@travellogpassword"
   }
 }

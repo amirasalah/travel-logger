@@ -1,7 +1,7 @@
 const API_URL =
     window.location.hostname === 'localhost'
         ? 'http://localhost:1337'
-        : 'https://travel-log-green.vercel.app/'
+        : 'https://travel-log-green.vercel.app'
 
 export const getLogEntries = async () => {
     const response = await fetch(`${API_URL}/api/logs`)
