@@ -1,6 +1,6 @@
 {
   "version": 2,
-  "name": "travelLog",
+  "name": "travelLogApp",
   "builds": [
     {
       "src": "src/index.js",
@@ -19,8 +19,8 @@
   "env": {
     "NODE_ENV": "production",
     "PORT": "1337",
-    "DATABASE_URL": "@travelLog2",
+    "DATABASE_URL": "@travellog2",
     "CORS_ORIGIN": "",
-    "PASSWORD": "@travelLogPassword"
+    "PASSWORD": "@travellogpassword"
   }
 }
