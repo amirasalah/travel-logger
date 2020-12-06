@@ -2,6 +2,7 @@ import * as React from 'react'
 import { useState, useEffect } from 'react'
 import ReactMapGL, { Marker, Popup } from 'react-map-gl'
 import { getLogEntries } from './apis'
+import MapPopup from './components/map-popup'
 import LogEntryForm from './LogEntryForm'
 
 const Map = () => {
@@ -20,7 +21,11 @@ const Map = () => {
         const entries = await getLogEntries()
         setLogEntries(entries)
     }
-
+    const ShowPopup = entry => {
+        setShowPopup({
+            [entry._id]: false,
+        })
+    }
     useEffect(() => {
         getEntries()
     }, [])
@@ -72,35 +77,10 @@ const Map = () => {
                         </div>
                     </Marker>
                     {showPopup[entry._id] && (
-                        <Popup
-                            latitude={entry.latitude}
-                            longitude={entry.longitude}
-                            closeButton={true}
-                            closeOnClick={false}
-                            dynamicPosition={true}
-                            onClose={() =>
-                                setShowPopup({
-                                    [entry._id]: false,
-                                })
-                            }
-                            anchor='top'
-                        >
-                            <div>
-                                <h3>{entry.title}</h3>
-                                {entry.description && (
-                                    <p>{entry.description}</p>
-                                )}
-                                <img src={entry.image} alt={entry.title} />
-                                <div>
-                                    <small>
-                                        Visit Date:
-                                        {new Date(
-                                            entry.visitDate,
-                                        ).toLocaleDateString()}
-                                    </small>
-                                </div>
-                            </div>
-                        </Popup>
+                        <MapPopup
+                            entry={entry}
+                            setShowPopup={() => ShowPopup(entry)}
+                        />
                     )}
                 </>
             ))}
