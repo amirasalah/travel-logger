@@ -1,9 +1,8 @@
 import * as React from 'react'
 import { useState, useEffect } from 'react'
-import ReactMapGL, { Marker, Popup } from 'react-map-gl'
+import ReactMapGL, { Marker } from 'react-map-gl'
 import { getLogEntries } from './apis'
 import MapPopup from './components/map-popup'
-import LogEntryForm from './LogEntryForm'
 
 const Map = () => {
     const [logEntries, setLogEntries] = useState([])
@@ -25,6 +24,10 @@ const Map = () => {
         setShowPopup({
             [entry._id]: false,
         })
+    }
+    const closeAndReload = () => {
+        setAddEntryLocation(null)
+        getEntries()
     }
     useEffect(() => {
         getEntries()
@@ -78,6 +81,7 @@ const Map = () => {
                     </Marker>
                     {showPopup[entry._id] && (
                         <MapPopup
+                            addPopup={false}
                             entry={entry}
                             setShowPopup={() => ShowPopup(entry)}
                         />
@@ -86,25 +90,11 @@ const Map = () => {
             ))}
             {addEntryLocation && (
                 <>
-                    <Popup
-                        latitude={addEntryLocation.latitude}
-                        longitude={addEntryLocation.longitude}
-                        closeButton={true}
-                        closeOnClick={false}
-                        dynamicPosition={true}
-                        onClose={() => setAddEntryLocation(null)}
-                        anchor='top'
-                    >
-                        <div className='popup'>
-                            <LogEntryForm
-                                onClose={() => {
-                                    setAddEntryLocation(null)
-                                    getEntries()
-                                }}
-                                location={addEntryLocation}
-                            />
-                        </div>
-                    </Popup>
+                    <MapPopup
+                        addPopup={true}
+                        entry={addEntryLocation}
+                        setShowPopup={closeAndReload}
+                    />
                 </>
             )}
         </ReactMapGL>

@@ -1,6 +1,6 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { createLogEntry } from './apis'
+import { createLogEntry } from '../apis'
 
 const LogEntryForm = ({ location, onClose }) => {
     const { register, handleSubmit } = useForm()
