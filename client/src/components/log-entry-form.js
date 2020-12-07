@@ -1,27 +1,34 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-import { createLogEntry } from '../apis'
+// import { createLogEntry } from '../apis'
 
-const LogEntryForm = ({ location, onClose }) => {
+const LogEntryForm = () => {
     const { register, handleSubmit } = useForm()
-    const [loading, setLoading] = React.useState(false)
-    const [error, setError] = React.useState('')
+    // const [loading, setLoading] = React.useState(false)
+    // const [error, setError] = React.useState('')
     const onSubmit = async data => {
-        try {
-            setLoading(true)
-            data.latitude = location.latitude
-            data.longitude = location.longitude
-            await createLogEntry(data)
-            onClose()
-        } catch (error) {
-            console.error(error)
-            setError(error.message)
-            setLoading(false)
-        }
+        // try {
+        //     setLoading(true)
+        //     data.latitude = location.latitude
+        //     data.longitude = location.longitude
+        //     await createLogEntry(data)
+        //     onClose()
+        // } catch (error) {
+        //     console.error(error)
+        //     setError(error.message)
+        //     setLoading(false)
+        // }
     }
+    // const addNewMarker = event => {
+    //     const [longitude, latitude] = event.lngLat
+    //     setAddEntryLocation({
+    //         longitude,
+    //         latitude,
+    //     })
+    // }
     return (
         <form className='entry-form' onSubmit={handleSubmit(onSubmit)}>
-            {error && <h3 className='error'>{error}</h3>}
+            {/* {error && <h3 className='error'>{error}</h3>} */}
             <label htmlFor='password'>Password</label>
             <input type='password' name='password' required ref={register} />
             <label htmlFor='title'>Title</label>
@@ -32,9 +39,9 @@ const LogEntryForm = ({ location, onClose }) => {
             <input name='image' ref={register} />
             <label htmlFor='visitDate'>Visit Date</label>
             <input name='visitDate' type='date' required ref={register} />
-            <button disabled={loading}>
+            {/* <button disabled={loading}>
                 {loading ? 'Loading...' : 'Create Entry'}
-            </button>
+            </button> */}
         </form>
     )
 }
