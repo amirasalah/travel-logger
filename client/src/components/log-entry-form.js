@@ -27,24 +27,48 @@ const LogEntryForm = () => {
     //     })
     // }
     return (
-        <main className='container'>
-            <form className='entry-form' onSubmit={handleSubmit(onSubmit)}>
+        <main className='container mx-auto'>
+            <form
+                className='flex flex-col w-6/12 mx-auto'
+                onSubmit={handleSubmit(onSubmit)}
+            >
                 {/* {error && <h3 className='error'>{error}</h3>} */}
-                <label htmlFor='password'>Password</label>
                 <input
+                    placeholder='Password'
+                    className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     type='password'
                     name='password'
                     required
                     ref={register}
                 />
-                <label htmlFor='title'>Title</label>
-                <input name='title' required ref={register} />
-                <label htmlFor='description'>Description</label>
-                <textarea name='description' rows={3} ref={register}></textarea>
-                <label htmlFor='image'>Image</label>
-                <input name='image' ref={register} />
-                <label htmlFor='visitDate'>Visit Date</label>
-                <input name='visitDate' type='date' required ref={register} />
+                <input
+                    placeholder='Title'
+                    className='my-3 p-4  border-solid border-2 border-light-blue-500'
+                    name='title'
+                    required
+                    ref={register}
+                />
+                <textarea
+                    placeholder='Description'
+                    className='my-3 p-4  border-solid border-2 border-light-blue-500'
+                    name='description'
+                    rows={3}
+                    ref={register}
+                ></textarea>
+                <input
+                    placeholder='Image Url'
+                    className='my-3 p-4  border-solid border-2 border-light-blue-500'
+                    name='image'
+                    ref={register}
+                />
+                <input
+                    placeholder='Visit Date'
+                    className='my-3 p-4  border-solid border-2 border-light-blue-500'
+                    name='visitDate'
+                    type='date'
+                    required
+                    ref={register}
+                />
                 {/* <button disabled={loading}>
                 {loading ? 'Loading...' : 'Create Entry'}
             </button> */}

@@ -39,15 +39,6 @@ body {
     display: block;
 }
 
-.entry-form label,
-.entry-form input,
-.entry-form textarea,
-.entry-form button {
-    font-size: 1rem;
-    margin: 0.5rem 0;
-    display: block;
-    width: 100%;
-}
 .header {
     padding: 0 50px 0 50px;
     display: flex;
@@ -62,9 +53,4 @@ body {
     text-decoration: none;
     color: #1b2737;
     padding: 0 10px;
-}
-.container {
-    max-width: 796px;
-    display: flex;
-    justify-content: center;
 }
