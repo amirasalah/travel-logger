@@ -43,27 +43,27 @@ const LogEntryForm = () => {
                 />
                 <input
                     placeholder='Title'
-                    className='my-3 p-4  border-solid border-2 border-light-blue-500'
+                    className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='title'
                     required
                     ref={register}
                 />
                 <textarea
                     placeholder='Description'
-                    className='my-3 p-4  border-solid border-2 border-light-blue-500'
+                    className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='description'
                     rows={3}
                     ref={register}
                 ></textarea>
                 <input
                     placeholder='Image Url'
-                    className='my-3 p-4  border-solid border-2 border-light-blue-500'
+                    className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='image'
                     ref={register}
                 />
                 <input
                     placeholder='Visit Date'
-                    className='my-3 p-4  border-solid border-2 border-light-blue-500'
+                    className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='visitDate'
                     type='date'
                     required
