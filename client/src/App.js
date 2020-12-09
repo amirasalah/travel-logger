@@ -27,6 +27,9 @@ const Map = () => {
             [entry._id]: false,
         })
     }
+    const reloadMap = () => {
+        getEntries()
+    }
     useEffect(() => {
         getEntries()
     }, [])
@@ -93,7 +96,7 @@ const Map = () => {
                     </ReactMapGL>
                 </Route>
                 <Route exact path='/new'>
-                    <LogEntryForm />
+                    <LogEntryForm reloadMap={reloadMap} />
                 </Route>
             </Router>
         </>

@@ -1,38 +1,31 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
-// import { createLogEntry } from '../apis'
+import { createLogEntry } from '../apis'
+import { useHistory } from 'react-router-dom'
 
-const LogEntryForm = () => {
+const LogEntryForm = ({ reloadMap }) => {
     const { register, handleSubmit } = useForm()
-    // const [loading, setLoading] = React.useState(false)
-    // const [error, setError] = React.useState('')
+    const [loading, setLoading] = React.useState(false)
+    const [error, setError] = React.useState('')
+    let history = useHistory()
     const onSubmit = async data => {
-        // try {
-        //     setLoading(true)
-        //     data.latitude = location.latitude
-        //     data.longitude = location.longitude
-        //     await createLogEntry(data)
-        //     onClose()
-        // } catch (error) {
-        //     console.error(error)
-        //     setError(error.message)
-        //     setLoading(false)
-        // }
+        try {
+            setLoading(true)
+            await createLogEntry(data)
+            history.push('/')
+            reloadMap()
+        } catch (error) {
+            setError(error.message)
+            setLoading(false)
+        }
     }
-    // const addNewMarker = event => {
-    //     const [longitude, latitude] = event.lngLat
-    //     setAddEntryLocation({
-    //         longitude,
-    //         latitude,
-    //     })
-    // }
     return (
         <main className='container mx-auto'>
             <form
                 className='flex flex-col w-6/12 mx-auto'
                 onSubmit={handleSubmit(onSubmit)}
             >
-                {/* {error && <h3 className='error'>{error}</h3>} */}
+                {error && <h3 className='error'>{error}</h3>}
                 <input
                     placeholder='Password'
                     className='my-3 p-4 border-solid border-2 border-light-blue-500'
@@ -45,6 +38,20 @@ const LogEntryForm = () => {
                     placeholder='Title'
                     className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='title'
+                    required
+                    ref={register}
+                />
+                <input
+                    placeholder='Latitude'
+                    className='my-3 p-4 border-solid border-2 border-light-blue-500'
+                    name='latitude'
+                    required
+                    ref={register}
+                />
+                <input
+                    placeholder='Longitude'
+                    className='my-3 p-4 border-solid border-2 border-light-blue-500'
+                    name='longitude'
                     required
                     ref={register}
                 />
@@ -69,9 +76,12 @@ const LogEntryForm = () => {
                     required
                     ref={register}
                 />
-                {/* <button disabled={loading}>
-                {loading ? 'Loading...' : 'Create Entry'}
-            </button> */}
+                <button
+                    className='rounded-none my-8 mx-auto px-20 text-blue-900 h-20 max-w-xs ring-4 ring-blue-100'
+                    disabled={loading}
+                >
+                    {loading ? 'Loading...' : 'Create Entry'}
+                </button>
             </form>
         </main>
     )
