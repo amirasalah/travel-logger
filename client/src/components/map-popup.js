@@ -1,7 +1,11 @@
 import React from 'react'
 import { Popup } from 'react-map-gl'
+import { deleteLogEntry } from '../apis'
 
 const MapPopup = ({ entry, setShowPopup }) => {
+    const deleteEntry = entry => {
+        deleteLogEntry(entry)
+    }
     return (
         <Popup
             latitude={entry.latitude}
@@ -24,7 +28,12 @@ const MapPopup = ({ entry, setShowPopup }) => {
             </div>
             <section className='flex space-x-4 my-5'>
                 <button className='flex-1 bg-red-300'>Edit</button>
-                <button className='flex-1 bg-red-300'>Delete</button>
+                <button
+                    onClick={() => deleteEntry(entry)}
+                    className='flex-1 bg-red-300'
+                >
+                    Delete
+                </button>
             </section>
         </Popup>
     )

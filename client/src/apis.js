@@ -7,6 +7,16 @@ export const getLogEntries = async () => {
     const response = await fetch(`${API_URL}/api/logs`)
     return response.json()
 }
+export const deleteLogEntry = async entry => {
+    const entryId = entry._id
+    const response = await fetch(`${API_URL}/api/logs/${entryId}`, {
+        method: 'DELETE',
+        headers: {
+            'content-type': 'application/json',
+        },
+    })
+    return response.json()
+}
 export const createLogEntry = async entry => {
     const password = entry.password
     delete entry.password

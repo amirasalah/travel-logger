@@ -14,6 +14,7 @@ const app = express()
 mongoose.connect(process.env.DATABASE_URL, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
+    useFindAndModify: false,
 })
 app.use(express.json())
 // set up the middleware for morgan to log the API calls

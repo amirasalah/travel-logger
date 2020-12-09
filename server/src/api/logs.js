@@ -1,5 +1,8 @@
 const { Router } = require('express')
+const mongoose = require('mongoose')
 const LogEntry = require('../models/logEntry')
+
+const { ObjectId } = mongoose.Types.ObjectId
 
 const { PASSWORD } = process.env
 
@@ -30,5 +33,13 @@ router.post('/', async (req, res, next) => {
         }
         next(error)
     }
+})
+router.delete('/:id', (req, res) => {
+    LogEntry.findByIdAndRemove(ObjectId(req.params.id), (err, docs) => {
+        if (err) res.json(err)
+        else {
+            res.json({ success: true })
+        }
+    })
 })
 module.exports = router
