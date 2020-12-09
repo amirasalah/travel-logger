@@ -12,15 +12,20 @@ const MapPopup = ({ entry, setShowPopup }) => {
             onClose={setShowPopup}
             anchor='top'
         >
-            <h3>{entry.title}</h3>
-            {entry.description && <p>{entry.description}</p>}
-            <img src={entry.image} alt={entry.title} />
+            <h3 className='text-2xl'>{entry.title}</h3>
+            <p className='text-lg'>{entry.description}</p>
+            {entry.image && <img src={entry.image} alt={entry.title} />}
+
             <div>
                 <small>
                     Visit Date:
                     {new Date(entry.visitDate).toLocaleDateString()}
                 </small>
             </div>
+            <section className='flex space-x-4 my-5'>
+                <button className='flex-1 bg-red-300'>Edit</button>
+                <button className='flex-1 bg-red-300'>Delete</button>
+            </section>
         </Popup>
     )
 }
