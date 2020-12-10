@@ -2,9 +2,10 @@ import React from 'react'
 import { Popup } from 'react-map-gl'
 import { deleteLogEntry } from '../apis'
 
-const MapPopup = ({ entry, setShowPopup }) => {
-    const deleteEntry = entry => {
-        deleteLogEntry(entry)
+const MapPopup = ({ entry, setShowPopup, reloadMap }) => {
+    const deleteEntry = async entry => {
+        await deleteLogEntry(entry)
+        reloadMap()
     }
     return (
         <Popup

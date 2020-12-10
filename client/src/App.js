@@ -27,9 +27,6 @@ const Map = () => {
             [entry._id]: false,
         })
     }
-    const reloadMap = () => {
-        getEntries()
-    }
     useEffect(() => {
         getEntries()
     }, [])
@@ -87,6 +84,7 @@ const Map = () => {
                                 </Marker>
                                 {showPopup[entry._id] && (
                                     <MapPopup
+                                        reloadMap={getEntries}
                                         entry={entry}
                                         setShowPopup={() => ShowPopup(entry)}
                                     />
@@ -96,7 +94,7 @@ const Map = () => {
                     </ReactMapGL>
                 </Route>
                 <Route exact path='/new'>
-                    <LogEntryForm reloadMap={reloadMap} />
+                    <LogEntryForm reloadMap={getEntries} />
                 </Route>
             </Router>
         </>
