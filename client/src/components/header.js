@@ -9,7 +9,7 @@ const Header = () => {
                     className='header-logo'
                     src='https://www.svgrepo.com/show/83777/plane.svg'
                     intrinsicsize='512 x 512'
-                    srcset='https://www.svgrepo.com/show/83777/plane.svg 4x'
+                    srcSet='https://www.svgrepo.com/show/83777/plane.svg 4x'
                     alt='Plane SVG Vector'
                     title='Plane SVG Vector'
                 ></img>

@@ -4,9 +4,10 @@ import { createLogEntry } from '../apis'
 import { useHistory } from 'react-router-dom'
 import { EditContext } from '../context/selectPointContext'
 import moment from 'moment'
+import InputField from './inputField'
 
 const LogEntryForm = ({ reloadMap }) => {
-    const { register, handleSubmit } = useForm()
+    const { handleSubmit, register } = useForm()
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState('')
     const editedPoint = React.useContext(EditContext)
@@ -25,8 +26,6 @@ const LogEntryForm = ({ reloadMap }) => {
     const { description, image, latitude, longitude, title, visitDate } =
         editedPoint || {}
     const date = moment(visitDate).format('YYYY-MM-DD')
-    console.log(editedPoint)
-    console.log(date)
     return (
         <main className='container mx-auto'>
             <form
@@ -35,62 +34,52 @@ const LogEntryForm = ({ reloadMap }) => {
             >
                 {error && <h3 className='error'>{error}</h3>}
                 {editedPoint === null ? (
-                    <input
+                    <InputField
                         placeholder='Password'
-                        className='my-3 p-4 border-solid border-2 border-light-blue-500'
-                        type='password'
                         name='password'
-                        required
-                        ref={register}
+                        type='password'
+                        required={true}
                     />
                 ) : null}
-                <input
+
+                <InputField
                     placeholder='Title'
-                    className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='title'
-                    required
-                    value={title || ''}
-                    ref={register}
+                    defaultValue={title || ''}
+                    required={true}
                 />
-                <input
+                <InputField
                     placeholder='Latitude'
-                    className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='latitude'
-                    required
-                    value={latitude || ''}
-                    ref={register}
+                    defaultValue={latitude || ''}
+                    required={true}
                 />
-                <input
+                <InputField
                     placeholder='Longitude'
-                    className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='longitude'
-                    required
-                    value={longitude || ''}
-                    ref={register}
+                    defaultValue={longitude || ''}
+                    required={true}
                 />
                 <textarea
                     placeholder='Description'
                     className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='description'
                     rows={3}
-                    value={description || ''}
+                    defaultValue={description || ''}
                     ref={register}
                 ></textarea>
-                <input
+
+                <InputField
                     placeholder='Image Url'
-                    className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='image'
-                    value={image || ''}
-                    ref={register}
+                    defaultValue={image || ''}
                 />
-                <input
+                <InputField
                     placeholder='Visit Date'
-                    className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='visitDate'
                     type='date'
-                    required
-                    value={date || ''}
-                    ref={register}
+                    defaultValue={date || ''}
+                    required={true}
                 />
                 <button
                     className='rounded-none my-8 mx-auto px-20 text-blue-900 h-20 max-w-xs ring-4 ring-blue-100'

@@ -48,9 +48,8 @@ const Map = () => {
                         }
                     >
                         {logEntries.map(entry => (
-                            <>
+                            <div key={entry._id}>
                                 <Marker
-                                    key={entry._id}
                                     latitude={entry.latitude}
                                     longitude={entry.longitude}
                                     offsetLeft={-20}
@@ -93,7 +92,7 @@ const Map = () => {
                                         }
                                     />
                                 )}
-                            </>
+                            </div>
                         ))}
                     </ReactMapGL>
                 </Route>
