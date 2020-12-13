@@ -1,11 +1,18 @@
 import React from 'react'
 import { Popup } from 'react-map-gl'
 import { deleteLogEntry } from '../apis'
+import { useHistory } from 'react-router-dom'
 
-const MapPopup = ({ entry, setShowPopup, reloadMap }) => {
+const MapPopup = ({ entry, setShowPopup, reloadMap, setSelectedLocation }) => {
+    const history = useHistory()
+
     const deleteEntry = async entry => {
         await deleteLogEntry(entry)
         reloadMap()
+    }
+    const editEntry = entry => {
+        setSelectedLocation(entry)
+        history.push('/edit')
     }
     return (
         <Popup
@@ -28,7 +35,12 @@ const MapPopup = ({ entry, setShowPopup, reloadMap }) => {
                 </small>
             </div>
             <section className='flex space-x-4 my-5'>
-                <button className='flex-1 bg-red-300'>Edit</button>
+                <button
+                    onClick={() => editEntry(entry)}
+                    className='flex-1 bg-red-300'
+                >
+                    Edit
+                </button>
                 <button
                     onClick={() => deleteEntry(entry)}
                     className='flex-1 bg-red-300'

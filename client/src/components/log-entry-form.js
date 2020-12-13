@@ -2,12 +2,15 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { createLogEntry } from '../apis'
 import { useHistory } from 'react-router-dom'
+import { EditContext } from '../context/selectPointContext'
+import moment from 'moment'
 
 const LogEntryForm = ({ reloadMap }) => {
     const { register, handleSubmit } = useForm()
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState('')
-    let history = useHistory()
+    const editedPoint = React.useContext(EditContext)
+    const history = useHistory()
     const onSubmit = async data => {
         try {
             setLoading(true)
@@ -19,6 +22,11 @@ const LogEntryForm = ({ reloadMap }) => {
             setLoading(false)
         }
     }
+    const { description, image, latitude, longitude, title, visitDate } =
+        editedPoint || {}
+    const date = moment(visitDate).format('YYYY-MM-DD')
+    console.log(editedPoint)
+    console.log(date)
     return (
         <main className='container mx-auto'>
             <form
@@ -26,19 +34,22 @@ const LogEntryForm = ({ reloadMap }) => {
                 onSubmit={handleSubmit(onSubmit)}
             >
                 {error && <h3 className='error'>{error}</h3>}
-                <input
-                    placeholder='Password'
-                    className='my-3 p-4 border-solid border-2 border-light-blue-500'
-                    type='password'
-                    name='password'
-                    required
-                    ref={register}
-                />
+                {editedPoint === null ? (
+                    <input
+                        placeholder='Password'
+                        className='my-3 p-4 border-solid border-2 border-light-blue-500'
+                        type='password'
+                        name='password'
+                        required
+                        ref={register}
+                    />
+                ) : null}
                 <input
                     placeholder='Title'
                     className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='title'
                     required
+                    value={title || ''}
                     ref={register}
                 />
                 <input
@@ -46,6 +57,7 @@ const LogEntryForm = ({ reloadMap }) => {
                     className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='latitude'
                     required
+                    value={latitude || ''}
                     ref={register}
                 />
                 <input
@@ -53,6 +65,7 @@ const LogEntryForm = ({ reloadMap }) => {
                     className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='longitude'
                     required
+                    value={longitude || ''}
                     ref={register}
                 />
                 <textarea
@@ -60,12 +73,14 @@ const LogEntryForm = ({ reloadMap }) => {
                     className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='description'
                     rows={3}
+                    value={description || ''}
                     ref={register}
                 ></textarea>
                 <input
                     placeholder='Image Url'
                     className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='image'
+                    value={image || ''}
                     ref={register}
                 />
                 <input
@@ -74,6 +89,7 @@ const LogEntryForm = ({ reloadMap }) => {
                     name='visitDate'
                     type='date'
                     required
+                    value={date || ''}
                     ref={register}
                 />
                 <button

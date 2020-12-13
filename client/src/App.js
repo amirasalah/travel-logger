@@ -5,15 +5,16 @@ import { getLogEntries } from './apis'
 import Header from './components/header'
 import MapPopup from './components/map-popup'
 import LogEntryForm from './components/log-entry-form'
-
 import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { EditContext } from './context/selectPointContext'
 
 const Map = () => {
     const [logEntries, setLogEntries] = useState([])
     const [showPopup, setShowPopup] = useState({})
+    const [selectedLocation, setSelectedLocation] = useState(null)
     const [viewport, setViewport] = useState({
         width: '100vw',
-        height: `calc(100vh - 53px)`,
+        height: `calc(100vh - 50px)`,
         latitude: 30.0444,
         longitude: 31.2357,
         zoom: 8,
@@ -87,6 +88,9 @@ const Map = () => {
                                         reloadMap={getEntries}
                                         entry={entry}
                                         setShowPopup={() => ShowPopup(entry)}
+                                        setSelectedLocation={
+                                            setSelectedLocation
+                                        }
                                     />
                                 )}
                             </>
@@ -96,6 +100,11 @@ const Map = () => {
                 <Route exact path='/new'>
                     <LogEntryForm reloadMap={getEntries} />
                 </Route>
+                <EditContext.Provider value={selectedLocation}>
+                    <Route exact path='/edit'>
+                        <LogEntryForm reloadMap={getEntries} />
+                    </Route>
+                </EditContext.Provider>
             </Router>
         </>
     )
