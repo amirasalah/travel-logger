@@ -2,18 +2,17 @@ import React from 'react'
 import { useForm } from 'react-hook-form'
 import { createLogEntry } from '../apis'
 import { useHistory } from 'react-router-dom'
-import { EditContext } from '../context/selectPointContext'
 import moment from 'moment'
 import { useLocation } from 'react-router-dom'
 import InputField from './inputField'
+import { SelectedLocation } from '../context/appState'
 
 const LogEntryForm = ({ reloadMap }) => {
+    const userSelectedLocation = SelectedLocation.useContainer()
     const { handleSubmit, register } = useForm()
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState('')
-    let location = useLocation()
-    console.log(location.pathname)
-    const editedPoint = React.useContext(EditContext)
+    const location = useLocation()
     const history = useHistory()
     const onSubmit = async data => {
         try {
@@ -26,8 +25,14 @@ const LogEntryForm = ({ reloadMap }) => {
             setLoading(false)
         }
     }
-    const { description, image, latitude, longitude, title, visitDate } =
-        editedPoint || {}
+    const {
+        description,
+        image,
+        latitude,
+        longitude,
+        title,
+        visitDate,
+    } = userSelectedLocation.selectedLocation
     const date = moment(visitDate).format('YYYY-MM-DD')
     return (
         <main className='container mx-auto'>

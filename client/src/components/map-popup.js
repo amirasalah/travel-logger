@@ -2,8 +2,10 @@ import React from 'react'
 import { Popup } from 'react-map-gl'
 import { deleteLogEntry } from '../apis'
 import { useHistory } from 'react-router-dom'
+import { SelectedLocation } from '../context/appState'
 
-const MapPopup = ({ entry, setShowPopup, reloadMap, setSelectedLocation }) => {
+const MapPopup = ({ entry, setShowPopup, reloadMap }) => {
+    const Location = SelectedLocation.useContainer()
     const history = useHistory()
 
     const deleteEntry = async entry => {
@@ -11,9 +13,10 @@ const MapPopup = ({ entry, setShowPopup, reloadMap, setSelectedLocation }) => {
         reloadMap()
     }
     const editEntry = entry => {
-        setSelectedLocation(entry)
+        Location.changeSelection(entry)
         history.push('/edit')
     }
+
     return (
         <Popup
             latitude={entry.latitude}
