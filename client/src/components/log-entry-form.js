@@ -4,12 +4,15 @@ import { createLogEntry } from '../apis'
 import { useHistory } from 'react-router-dom'
 import { EditContext } from '../context/selectPointContext'
 import moment from 'moment'
+import { useLocation } from 'react-router-dom'
 import InputField from './inputField'
 
 const LogEntryForm = ({ reloadMap }) => {
     const { handleSubmit, register } = useForm()
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState('')
+    let location = useLocation()
+    console.log(location.pathname)
     const editedPoint = React.useContext(EditContext)
     const history = useHistory()
     const onSubmit = async data => {
@@ -33,15 +36,14 @@ const LogEntryForm = ({ reloadMap }) => {
                 onSubmit={handleSubmit(onSubmit)}
             >
                 {error && <h3 className='error'>{error}</h3>}
-                {editedPoint === null ? (
+                {location.pathname === '/new' && (
                     <InputField
                         placeholder='Password'
                         name='password'
                         type='password'
                         required={true}
                     />
-                ) : null}
-
+                )}
                 <InputField
                     placeholder='Title'
                     name='title'
