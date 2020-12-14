@@ -12,6 +12,7 @@ const LogEntryForm = ({ reloadMap }) => {
     const { handleSubmit, register } = useForm()
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState('')
+    const [mode, setMode] = React.useState('add')
     const location = useLocation()
     const history = useHistory()
     const onSubmit = async data => {
@@ -25,6 +26,13 @@ const LogEntryForm = ({ reloadMap }) => {
             setLoading(false)
         }
     }
+    React.useEffect(() => {
+        if (location.pathname === '/new') {
+            setMode('add')
+        } else {
+            setMode('edit')
+        }
+    }, [location.pathname])
     const {
         description,
         image,
@@ -41,7 +49,7 @@ const LogEntryForm = ({ reloadMap }) => {
                 onSubmit={handleSubmit(onSubmit)}
             >
                 {error && <h3 className='error'>{error}</h3>}
-                {location.pathname === '/new' && (
+                {mode === 'add' && (
                     <InputField
                         placeholder='Password'
                         name='password'
@@ -52,19 +60,19 @@ const LogEntryForm = ({ reloadMap }) => {
                 <InputField
                     placeholder='Title'
                     name='title'
-                    defaultValue={title || ''}
+                    defaultValue={mode === 'edit' ? title : ''}
                     required={true}
                 />
                 <InputField
                     placeholder='Latitude'
                     name='latitude'
-                    defaultValue={latitude || ''}
+                    defaultValue={mode === 'edit' ? latitude : ''}
                     required={true}
                 />
                 <InputField
                     placeholder='Longitude'
                     name='longitude'
-                    defaultValue={longitude || ''}
+                    defaultValue={mode === 'edit' ? longitude : ''}
                     required={true}
                 />
                 <textarea
@@ -72,20 +80,20 @@ const LogEntryForm = ({ reloadMap }) => {
                     className='my-3 p-4 border-solid border-2 border-light-blue-500'
                     name='description'
                     rows={3}
-                    defaultValue={description || ''}
+                    defaultValue={mode === 'edit' ? description : ''}
                     ref={register}
                 ></textarea>
 
                 <InputField
                     placeholder='Image Url'
                     name='image'
-                    defaultValue={image || ''}
+                    defaultValue={mode === 'edit' ? image : ''}
                 />
                 <InputField
                     placeholder='Visit Date'
                     name='visitDate'
                     type='date'
-                    defaultValue={date || ''}
+                    defaultValue={mode === 'edit' ? date : ''}
                     required={true}
                 />
                 <button
