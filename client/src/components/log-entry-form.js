@@ -1,7 +1,7 @@
 import React from 'react'
 import { useForm } from 'react-hook-form'
 import { createLogEntry, updateLogEntry } from '../apis'
-import { useHistory } from 'react-router-dom'
+import { useHistory, Prompt } from 'react-router-dom'
 import moment from 'moment'
 import { useLocation } from 'react-router-dom'
 import { SelectedLocation } from '../context/appState'
@@ -11,6 +11,8 @@ const LogEntryForm = ({ reloadMap }) => {
     const { handleSubmit, register, setValue } = useForm()
     const [loading, setLoading] = React.useState(false)
     const [error, setError] = React.useState('')
+    // eslint-disable-next-line no-unused-vars
+    const [formNotFinished, setFormNotFinished] = React.useState(true)
     const [mode, setMode] = React.useState('add')
     const location = useLocation()
     const history = useHistory()
@@ -65,6 +67,10 @@ const LogEntryForm = ({ reloadMap }) => {
 
     return (
         <main className='container mx-auto'>
+            <Prompt
+                when={formNotFinished}
+                message='The form is not completed, Are you sure you wanna navigate away?'
+            />
             <form
                 className='flex flex-col w-6/12 mx-auto'
                 onSubmit={handleSubmit(onSubmit)}

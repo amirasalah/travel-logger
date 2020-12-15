@@ -7,8 +7,8 @@ import { SelectedLocation } from '../context/appState'
 const MapPopup = ({ entry, setShowPopup, reloadMap }) => {
     const Location = SelectedLocation.useContainer()
     const history = useHistory()
-
     const deleteEntry = async entry => {
+        alert('Are you sure you want to delete this?')
         await deleteLogEntry(entry)
         reloadMap()
     }
@@ -39,13 +39,29 @@ const MapPopup = ({ entry, setShowPopup, reloadMap }) => {
             </div>
             <section className='flex space-x-4 my-5'>
                 <button
-                    onClick={() => editEntry(entry)}
+                    onClick={() => {
+                        if (
+                            window.confirm(
+                                'Are you sure you wish to edit this item?',
+                            )
+                        ) {
+                            editEntry(entry)
+                        }
+                    }}
                     className='flex-1 bg-red-300'
                 >
                     Edit
                 </button>
                 <button
-                    onClick={() => deleteEntry(entry)}
+                    onClick={() => {
+                        if (
+                            window.confirm(
+                                'Are you sure you wish to delete this item?',
+                            )
+                        ) {
+                            deleteEntry(entry)
+                        }
+                    }}
                     className='flex-1 bg-red-300'
                 >
                     Delete
