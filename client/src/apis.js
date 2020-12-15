@@ -17,6 +17,23 @@ export const deleteLogEntry = async entry => {
     })
     return response.json()
 }
+export const updateLogEntry = async entry => {
+    console.log(entry)
+    const entryId = entry._id
+    const response = await fetch(`${API_URL}/api/logs/${entryId}`, {
+        method: 'PUT',
+        headers: {
+            'content-type': 'application/json',
+        },
+        body: JSON.stringify(entry),
+    })
+    const jsonResponse = await response.json()
+    if (response.ok) {
+        return jsonResponse
+    } else {
+        throw new Error('Well that was Awkward!!')
+    }
+}
 export const createLogEntry = async entry => {
     const password = entry.password
     delete entry.password

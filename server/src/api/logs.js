@@ -8,8 +8,6 @@ const { PASSWORD } = process.env
 
 const router = Router()
 
-// TODO: Add delete endpoint
-// TODO: Add update endpoint
 router.get('/', async (req, res, next) => {
     try {
         const entries = await LogEntry.find()
@@ -34,7 +32,20 @@ router.post('/', async (req, res, next) => {
         next(error)
     }
 })
+router.put('/:id', (req, res) => {
+    LogEntry.findByIdAndUpdate(
+        ObjectId(req.params.id),
+        req.body,
+        (data, err) => {
+            if (err) res.json(err)
+            else {
+                res.json(data)
+            }
+        },
+    )
+})
 router.delete('/:id', (req, res) => {
+    // eslint-disable-next-line no-unused-vars
     LogEntry.findByIdAndRemove(ObjectId(req.params.id), (err, docs) => {
         if (err) res.json(err)
         else {
